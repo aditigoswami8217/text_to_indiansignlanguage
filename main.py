@@ -14,11 +14,14 @@ import zipfile
 import sys
 import time
 import ssl
+from flask_ngrok import run_with_ngrok
 
 ssl._create_default_https_context = ssl._create_unverified_context
 from flask import Flask,request,render_template,send_from_directory,jsonify
 
-app =Flask(__name__,static_folder='static', static_url_path='')
+app = Flask(__name__, static_folder='static', static_url_path='')
+run_with_ngrok(app)  # Start ngrok when the app is run
+
 
 import stanza
 # from stanza.server import CoreNLPClient
@@ -282,7 +285,7 @@ def pre_process(text):
 # checks if sigml file exists of the word if not use letters for the words
 def final_output(input):
 	final_string=""
-	valid_words=open("words.txt",'r').read();
+	valid_words=open("/content/text_to_isl/words.txt",'r').read();
 	valid_words=valid_words.split('\n')
 	fin_words=[]
 	for word in input:
@@ -391,5 +394,7 @@ def serve_signfiles(path):
 	return send_from_directory('static',path)
 
 
-if __name__=="__main__":
-	app.run(debug=True)
+if __name__ == "__main__":
+    import os
+    os.system('ngrok authtoken <YOUR_AUTHTOKEN>')
+    app.run()  # Use just this line instead of `app.run(debug=True)`
