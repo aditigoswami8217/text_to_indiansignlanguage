@@ -8,6 +8,9 @@
 
 
 }
+.main{
+     background-color: #fefbd8;
+}
 .player
 {
     width: 25rem;
@@ -22,6 +25,12 @@
 .test_word_list
 {
     height: 30rem;
+}
+.test_list 
+{
+     list-style-type: circle;
+     background: #3399ff;
+     padding: 20px;
 }
 .anim
 {
